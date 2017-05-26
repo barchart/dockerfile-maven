@@ -381,7 +381,7 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
   protected DockerClient openDockerClient() throws MojoExecutionException {
     try {
       return DefaultDockerClient.fromEnv()
-    	  .authConfig(auth())
+          .authConfig(auth())
           .readTimeoutMillis(readTimeoutMillis)
           .connectTimeoutMillis(connectTimeoutMillis)
           .build();
@@ -390,13 +390,13 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
     }
   }
 
-private AuthConfig auth() {
-	try {
-		AuthConfig config = AuthConfig.fromDockerConfig().build();
-		return config;
-	} catch (IOException e) {
-		getLog().error(e);
-		return AuthConfig.builder().build();
-	}
-}
+  private AuthConfig auth() {
+    try {
+      AuthConfig config = AuthConfig.fromDockerConfig().build();
+      return config;
+    } catch (IOException e) {
+      getLog().error(e);
+      return AuthConfig.builder().build();
+    }
+  }
 }
