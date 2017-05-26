@@ -26,6 +26,7 @@ import com.google.common.io.Files;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
+import com.spotify.docker.client.messages.AuthConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -380,6 +381,7 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
   protected DockerClient openDockerClient() throws MojoExecutionException {
     try {
       return DefaultDockerClient.fromEnv()
+    	  .authConfig(auth())
           .readTimeoutMillis(readTimeoutMillis)
           .connectTimeoutMillis(connectTimeoutMillis)
           .build();
@@ -387,4 +389,14 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
       throw new MojoExecutionException("Could not load Docker certificates", e);
     }
   }
+
+private AuthConfig auth() {
+	try {
+		AuthConfig config = AuthConfig.fromDockerConfig().build();
+		return config;
+	} catch (IOException e) {
+		getLog().error(e);
+		return AuthConfig.builder().build();
+	}
+}
 }

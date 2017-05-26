@@ -8,6 +8,7 @@
     <version>5</version>
   </parent>
 
+  <groupId>com.barchart</groupId>
   <artifactId>dockerfile-maven</artifactId>
   <version>1.2.3-SNAPSHOT</version>
   <packaging>pom</packaging>
