@@ -27,7 +27,7 @@
   <artifactId>missing-dockerfile</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <description>A simple IT verifying it fails gracefully when the dockerfile is not found.</description>
+  <description>A simple IT verifying it skips the build when a dockerfile is not found.</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

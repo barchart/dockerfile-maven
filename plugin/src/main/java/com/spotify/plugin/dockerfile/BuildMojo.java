@@ -91,6 +91,13 @@ public class BuildMojo extends AbstractDockerMojo {
       log.info("Skipping execution because 'dockerfile.build.skip' is set");
       return;
     }
+    
+    if (!new File(contextDirectory, "Dockerfile").exists() 
+        && !new File(contextDirectory, "dockerfile").exists()) {
+      log.info("Skipping execution because missing Dockerfile in context directory: " 
+          + contextDirectory.getPath());
+      return;
+    }    
 
     final String imageId = buildImage(
         dockerClient, log, verbose, contextDirectory, repository, tag, pullNewerImage, noCache);
@@ -128,13 +135,6 @@ public class BuildMojo extends AbstractDockerMojo {
       throws MojoExecutionException, MojoFailureException {
 
     log.info(MessageFormat.format("Building Docker context {0}", contextDirectory));
-
-    if (!new File(contextDirectory, "Dockerfile").exists()
-        && !new File(contextDirectory, "dockerfile").exists()) {
-      log.error("Missing Dockerfile in context directory: " + contextDirectory.getPath());
-      throw new MojoFailureException("Missing Dockerfile in context directory: "
-                                     + contextDirectory.getPath());
-    }
 
     final LoggingProgressHandler progressHandler = new LoggingProgressHandler(log, verbose);
     final ArrayList<DockerClient.BuildParam> buildParameters = new ArrayList<>();

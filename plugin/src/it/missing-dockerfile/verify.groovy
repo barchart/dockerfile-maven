@@ -17,5 +17,5 @@
  * limitations under the License.
  * -\-\-
  */
-String buildLog = new File("${basedir}/build.log").getText("UTF-8")
-assert buildLog.contains("Missing Dockerfile in context directory")
+File imageIdFile = new File(basedir, "target/docker/image-id")
+assert !imageIdFile.exists()
